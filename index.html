@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>程序员副业匹配器 | 测测你最适合哪种副业赚钱</title>
+<meta name="description" content="2026程序员副业指南：填技能→秒出最佳副业方案。远程接单、开源赞助、技术写作、API变现、课程录制、代码审查。含收入预估和启动指南。">
+<meta name="keywords" content="程序员副业,副业赚钱,Java接单,远程兼职,开源变现,API赚钱,技术写作,被动收入">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.6}
+.container{max-width:700px;margin:0 auto;padding:20px}
+h1{text-align:center;font-size:2em;color:#38bdf8;margin:30px 0 5px}
+h2{color:#fbbf24;margin:25px 0 15px;font-size:1.2em;border-left:4px solid #fbbf24;padding-left:12px}
+.sub{text-align:center;color:#64748b;margin-bottom:25px}
+.quiz-box{background:#1e293b;border-radius:16px;padding:25px;margin:20px 0;border:1px solid #334155}
+.q-title{font-size:1.05em;color:#f8fafc;font-weight:700;margin-bottom:15px}
+.option{display:block;width:100%;padding:14px 16px;margin:8px 0;background:#0f172a;border:2px solid #334155;border-radius:10px;color:#e2e8f0;font-size:.95em;cursor:pointer;text-align:left;transition:.2s}
+.option:hover,.option.selected{border-color:#38bdf8;background:#1e3a5f}
+.result{display:none;background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:16px;padding:30px;margin:30px 0;border:2px solid #fbbf24;text-align:center}
+.result h3{font-size:1.5em;color:#fbbf24;margin-bottom:10px}
+.result .income{font-size:2em;color:#38bdf8;margin:15px 0;font-weight:700}
+.result .match{color:#94a3b8;margin:10px 0}
+.result .steps{text-align:left;margin:20px 0;padding:15px;background:#0f172a;border-radius:10px}
+.result .steps li{margin:8px 0;color:#a5f3fc}
+.btn{display:inline-block;padding:14px 35px;background:linear-gradient(135deg,#38bdf8,#2563eb);color:#fff;border-radius:30px;font-size:1.1em;font-weight:700;cursor:pointer;border:none;margin:10px;transition:.2s}
+.btn:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(56,189,248,.3)}
+.btn-reset{background:transparent;border:2px solid #38bdf8;color:#38bdf8}
+.progress{height:4px;background:#334155;border-radius:2px;margin:20px 0}
+.progress-fill{height:100%;background:#38bdf8;border-radius:2px;transition:.3s}
+.sponsor{text-align:center;margin:50px 0 30px;background:#1e293b;border-radius:16px;padding:30px;border:2px solid #fbbf24}
+.sponsor img{width:200px;border-radius:12px}
+.sponsor h3{color:#fbbf24;margin:10px 0}
+.nav{margin:30px 0 15px;text-align:center}
+.nav a{color:#38bdf8;text-decoration:none;padding:6px 14px;border:1px solid #334155;border-radius:20px;font-size:.85em;margin:3px}
+.nav a:hover{background:#1e293b;border-color:#38bdf8}
+.stats-box{display:flex;gap:15px;flex-wrap:wrap;margin:15px 0}
+.stat-item{flex:1;min-width:80px;text-align:center;padding:12px;background:#0f172a;border-radius:10px;border:1px solid #334155}
+.stat-val{font-size:1.4em;color:#38bdf8;font-weight:700}
+.stat-label{font-size:.75em;color:#64748b;margin-top:4px}
+.social-share{margin:15px 0;text-align:center}
+.social-share button{padding:10px 22px;background:#2563eb;color:#fff;border:none;border-radius:20px;margin:5px;cursor:pointer;font-size:.9em}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>💰 程序员副业匹配器</h1>
+<p class="sub">回答6题 → 秒出最适合你的副业方案 → 含收入预估</p>
+<div class="progress"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
+<div id="quiz">
+<div class="quiz-box">
+<div class="q-title">Q1: 你最擅长什么技术栈？</div>
+<button class="option" onclick="pick(1,'java')">☕ Java / Spring Boot 后端</button>
+<button class="option" onclick="pick(1,'python')">🐍 Python / 数据分析</button>
+<button class="option" onclick="pick(1,'frontend')">🎨 前端 / React / Vue</button>
+<button class="option" onclick="pick(1,'devops')">🔧 DevOps / Docker / K8s</button>
+<button class="option" onclick="pick(1,'ai')">🤖 AI / 大模型 / NLP</button>
+</div>
+<div class="quiz-box" id="q2" style="display:none">
+<div class="q-title">Q2: 你每周能投入多少时间？</div>
+<button class="option" onclick="pick(2,'5h')">⏰ 5小时内（碎片时间）</button>
+<button class="option" onclick="pick(2,'15h')">📅 10-20小时（周末集中）</button>
+<button class="option" onclick="pick(2,'30h')">🚀 30小时+（全力冲刺）</button>
+</div>
+<div class="quiz-box" id="q3" style="display:none">
+<div class="q-title">Q3: 你想赚多少钱？（月目标）</div>
+<button class="option" onclick="pick(3,'500')">☕ 500-1000元（零花钱）</button>
+<button class="option" onclick="pick(3,'3000')">💰 3000-5000元（抵工资）</button>
+<button class="option" onclick="pick(3,'10000')">🏆 10000+元（全职级别）</button>
+</div>
+<div class="quiz-box" id="q4" style="display:none">
+<div class="q-title">Q4: 你偏好哪种工作方式？</div>
+<button class="option" onclick="pick(4,'passive')">🛌 被动收入（一次做，持续收）</button>
+<button class="option" onclick="pick(4,'freelance')">💼 接单干活（多劳多得）</button>
+<button class="option" onclick="pick(4,'community')">👥 社区/内容（慢慢积累）</button>
+</div>
+<div class="quiz-box" id="q5" style="display:none">
+<div class="q-title">Q5: 你有现成的受众吗？</div>
+<button class="option" onclick="pick(5,'yes')">✅ 有（博客/公众号/社交账号）</button>
+<button class="option" onclick="pick(5,'no')">❌ 没有，从零开始</button>
+</div>
+<div class="quiz-box" id="q6" style="display:none">
+<div class="q-title">Q6: 你愿意先免费提供价值再变现吗？</div>
+<button class="option" onclick="pick(6,'yes')">✅ 愿意，先建立信任</button>
+<button class="option" onclick="pick(6,'no')">❌ 不想，直接变现</button>
+</div>
+</div>
+
+<div id="result" class="result">
+<div id="result-content"></div>
+<button class="btn" onclick="shareResult()">📤 分享结果给朋友</button>
+<button class="btn btn-reset" onclick="resetQuiz()">🔄 重新测试</button>
+</div>
+
+<div class="nav" style="margin-top:30px">
+<a href="https://Abyte-zym.github.io/java-career-blog/">📚 面试博客</a>
+<a href="https://Abyte-zym.github.io/java-interview-quiz/">☕ 题库</a>
+<a href="https://Abyte-zym.github.io/arsenal/">🎯 总入口</a>
+</div>
+
+<div class="sponsor">
+<h3>☕ 副业方案对你有启发？</h3>
+<p>请我喝杯咖啡，我会持续更新更多赚钱路子~</p>
+<img src="https://raw.githubusercontent.com/Abyte-zym/jarvis-backup/main/mm_facetoface_collect_qrcode_1779427130944.png" alt="赞赏码" loading="lazy">
+</div>
+</div>
+
+<script>
+let answers={}, currentQ=1;
+const schemes={
+'java_5h_500_passive_yes_yes':{title:'📝 开源赞助 + 技术写作',income:'¥500-1500/月',match:'高度匹配 · 低频高价值',steps:['1. 把已有项目加GitHub Sponsor按钮','2. 每周写1篇技术博客→掘金/CSDN同步','3. 博客放赞赏码+引流到工具站','4. 2-3个月后月入¥500+可期']},
+'java_5h_500_passive_no_yes':{title:'🛠 开源工具+SEO引流',income:'¥300-800/月',match:'匹配 · 需3个月积累',steps:['1. 在GitHub建2-3个实用Java工具','2. 用SEO文章引流（你现在就在做）','3. 工具页放赞赏码','4. 坚持更新3个月']},
+'java_15h_3000_freelance_yes_yes':{title:'💼 程序员客栈/猪八戒接单',income:'¥3000-8000/月',match:'最佳匹配 · 高回报',steps:['1. 注册程序员客栈+猪八戒','2. 建作品集展示RAG和秒杀项目','3. 从¥200-500小单开始接','4. 好评积累后接¥2000+中单','5. 稳定3-5个老客户=月入¥5000+']},
+'java_15h_3000_community_no_yes':{title:'🎥 B站/抖音Java教程',income:'¥1000-5000/月',match:'中等匹配 · 需内容能力',steps:['1. 选细分方向：Spring AI入门/秒杀实战','2. 每周2条视频，坚持3个月','3. 引流到知识星球（¥99/年）','4. 100人付费=¥9900/年']},
+'java_30h_10000_community_yes_yes':{title:'🏫 在线训练营+1v1辅导',income:'¥5000-20000/月',match:'顶级匹配 · 高投入高回报',steps:['1. 开7天Java面试冲刺训练营（¥199/人）','2. 提供1v1模拟面试（¥99/次）','3. 20人训练营+5次1v1=¥5000+','4. 规模化后→录制课程→被动收入']},
+'python_15h_3000_freelance_yes_yes':{title:'🐍 数据爬虫+自动化脚本',income:'¥3000-6000/月',match:'高度匹配 · 需求旺盛',steps:['1. 程序员客栈搜"爬虫""数据分析"','2. 用Python爬虫+数据清洗接单','3. 一单¥500-2000，周接2-3单','4. 建自动化脚本模板库提效']},
+'python_30h_10000_community_yes_yes':{title:'🤖 AI Agent开发+企业服务',income:'¥8000-30000/月',match:'风口匹配 · 2026最热',steps:['1. 学会LangChain/AutoGPT','2. 帮中小企业做AI客服Agent','3. 一个Agent收¥5000-20000','4. 维护费¥1000/月/客户']},
+'frontend_15h_3000_freelance_yes_yes':{title:'🎨 网页/小程序外包',income:'¥3000-8000/月',match:'高度匹配 · 单量大',steps:['1. 注册Upwork/Fiverr','2. 接React/Vue前端页面','3. 一个企业站¥1500-5000','4. 每月2个客户稳定收入']},
+'ai_30h_10000_passive_yes_yes':{title:'🤖 AI API服务 + Prompt模板',income:'¥5000-15000/月',match:'风口匹配 · 2026最热赛道',steps:['1. 造垂直AI工具（简历优化/面试模拟）','2. RapidAPI上架API服务','3. Gumroad卖Prompt模板包','4. 免费版引流→付费版变现']},
+'devops_15h_3000_freelance_yes_yes':{title:'🔧 运维外包+服务器部署',income:'¥3000-7000/月',match:'匹配 · 技术门槛高回报',steps:['1. 猪八戒搜"Docker""服务器部署"','2. 帮企业做容器化迁移','3. 一次部署¥1000-3000','4. 签运维月费¥500/月/客户']},
+'java_15h_3000_passive_yes_yes':{title:'📦 数字产品+模板售卖',income:'¥2000-5000/月',match:'高匹配 · 一次做持续卖',steps:['1. 做Spring Boot脚手架卖¥29','2. 做面试题库PDF卖¥19','3. Gumroad/闲鱼同时上架','4. SEO文章引流到产品页']},
+'java_15h_3000_passive_no_yes':{title:'📝 SEO内容矩阵',income:'¥1000-3000/月',match:'中等匹配 · 3-6月见效',steps:['1. 你就是现在做的——43篇SEO文章','2. 每篇放赞赏码+产品链接','3. 日访问量到500→赞赏¥10-50/天','4. 6个月后月入¥1000-3000']},
+};
+let fallback={title:'📝 SEO内容矩阵+赞赏变现',income:'¥500-2000/月',match:'通用方案 · 你现在就在做了',steps:['1. 你已在做的：43篇文章+30工具','2. 提交Google收录→自然搜索流量','3. 日访问500→赞赏¥10-50/天','4. 坚持6个月→月入¥1000-3000']};
+
+function pick(q,val){answers[q]=val;if(q==1)document.getElementById('q2').style.display='block';if(q==2)document.getElementById('q3').style.display='block';if(q==3)document.getElementById('q4').style.display='block';if(q==4)document.getElementById('q5').style.display='block';if(q==5)document.getElementById('q6').style.display='block';currentQ++;document.getElementById('progress').style.width=(currentQ*16)+'%';if(q==6){showResult();}}
+function showResult(){
+document.getElementById('quiz').style.display='none';
+document.getElementById('result').style.display='block';
+document.getElementById('progress').style.width='100%';
+let key=`${answers[1]}_${answers[2]}_${answers[3]}_${answers[4]}_${answers[5]}_${answers[6]}`;
+let s=schemes[key]||fallback;
+document.getElementById('result-content').innerHTML=`
+<h3>${s.title}</h3>
+<div class="match">${s.match}</div>
+<div class="income">${s.income}</div>
+<div class="stats-box">
+<div class="stat-item"><div class="stat-val">${answers[3]=='500'?'低':'中高'}</div><div class="stat-label">启动难度</div></div>
+<div class="stat-item"><div class="stat-val">${answers[2]=='5h'?'3-6':'1-3'}</div><div class="stat-label">见效月数</div></div>
+<div class="stat-item"><div class="stat-val">${s.income.split('-')[0]}</div><div class="stat-label">预期最低/月</div></div>
+</div>
+<h2 style="color:#38bdf8">🚀 启动步骤</h2>
+<ul class="steps">${s.steps.map(x=>'<li>'+x+'</li>').join('')}</ul>
+`;}
+function shareResult(){
+let t=document.getElementById('result-content').querySelector('h3').innerText;
+let i=document.getElementById('result-content').querySelector('.income').innerText;
+navigator.clipboard.writeText('🔮 我的程序员副业匹配结果：'+t+' 预估收入：'+i+' 你也测测→Abyte-zym.github.io/side-hustle-matcher').then(()=>alert('✅ 已复制！发到朋友圈/群里，看看朋友们是什么结果~'));
+}
+function resetQuiz(){answers={};currentQ=1;document.getElementById('quiz').style.display='block';document.getElementById('result').style.display='none';document.getElementById('progress').style.width='0%';['q2','q3','q4','q5','q6'].forEach(x=>document.getElementById(x).style.display='none');}
+</script>
+</body>
+</html>
